@@ -1,0 +1,5 @@
+Setelah dilakukan uji matlab, total error paling kecil yang bisa didapatkan adalah 2.3904. Angka ini cukup tinggi karena nilai tebakan alfa dan beta awal yang berbeda dengan hasil simulasi
+Setelah uji matab dilakukan isi dari file Parm_cari.txt akan berubah menjadi:
+   4.2714162e-02  -3.3688219e+00
+Hal ini berarti berdasarkan uji Matab nilai a=    4.2714162e-02
+Nilai ??= -3.3688219e+00

@@ -1,0 +1,37 @@
+
+
+simulasi=guidata(gcbo);
+
+plot(simulasi.axes1,0,0,'oy','MarkerSize',30,'MarkerFaceColor','yellow');
+axis([-2.5 2.5 -2.5 2.5]);
+xlabel('x (AU)');
+ylabel('y (AU)');
+hold on;
+
+n=str2num(get(simulasi.edit_n,'String'));
+dt=str2num(get(simulasi.edit_dt,'String'));
+t=0;
+x=str2num(get(simulasi.edit_x0,'String'));
+y=str2num(get(simulasi.edit_y0,'String'));
+vx=str2num(get(simulasi.edit_Vx,'String'));
+vy=str2num(get(simulasi.edit_Vy,'String'));
+
+for step=1:n-1;
+	R=sqrt(x^2+y^2);
+	
+	vx_new=vx-9*pi^2*x*dt/R^3;
+	vy_new=vy-9*pi^2*y*dt/R^3;
+
+	x_new=x+vx_new*dt;
+	y_new=y+vy_new*dt;
+
+	plot(simulasi.axes1,x_new,y_new,'-k');
+	drawnow;
+
+	vx=vx_new;
+	vy=vy_new;
+
+	x=x_new;
+	y=y_new;
+
+end;

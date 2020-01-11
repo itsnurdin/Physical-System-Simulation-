@@ -1,0 +1,57 @@
+simulasi=guidata(gcbo);
+
+n=str2num(get(simulasi.edit_n,'String'));
+dt=str2num(get(simulasi.edit_dt,'String'));
+h=dt;
+
+t(1)=0;
+x(1)=str2num(get(simulasi.edit_x0,'String'));
+y(1)=str2num(get(simulasi.edit_y0,'String'));
+vx(1)=str2num(get(simulasi.edit_Vx,'String'));
+vy(1)=str2num(get(simulasi.edit_Vy,'String'));
+
+fvx=(v^2)*x/(R^3);
+fvy=(v^2)*y/(R^3);
+
+for i=1:n
+	R=((x(i)^2)+(y(i)^2))^(1/2);
+	v(i)=((vx(i)^2)+(vy(i)^2))^(1/2);
+	t(i+1)=t(i)+h;
+
+	k1vx=fvx(t(i),vx(i));
+	k1vy=fvy(t(i),vy(i));
+
+	k2x=fvx(t(i)+1/2*h,vx(i)+1/2*k1x*h);
+        k2y=fvy(t(i)+1/2*h,vy(i)+1/2*k1y*h);
+
+	k3x=fvx(t(i)+1/2*h,vx(i)+1/2*k2x*h);
+        k3y=fvy(t(i)+1/2*h,vy(i)+1/2*k2y*h);
+
+	k4x=fvx(t(i)+h,vx(i)+k3x*h);
+        k4y=fvy(t(i)+h,vy(i)+k3y*h);
+
+	vx(i+1)=vx(i)+(1/6*(k1x+2*k2x+2*k3x+k4x))*h;
+        vy(i+1)=vy(i)+(1/6*(k1y+2*k2y+2*k3y+k4y))*h;
+
+        t(i)=t(i+1);
+	vx(i)=y(i+1);
+        vy(i)=y(i+1);
+
+x(i)=x(i-1)+vx(i)*dt;
+y(i)=x(i-1)+vy(i)*dt;
+
+end;
+
+popupmenu=get(popupmenu,'value');
+switch popupmenu
+	case 1
+		plot(simulasi.axes1,0,0,'oy','xlabel','x (AU)','ylabel','y (AU)','MarkerSize',30,'MarkerFaceColor','yellow');
+		hold on;
+		plot(simulasi.axes1,x(i),y(i),'-k');
+		drawnow;
+
+	case 2
+		plot(simulasi.axes1,x,t,'r',y,t,'g');
+
+	case 3
+		plot(axes1,vx,t,'r',vy,t,'g');
